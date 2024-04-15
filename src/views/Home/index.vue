@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    我是Home
+    <div style="height: 1500px;">我是Home</div>
 </template>
 
 <style scoped>
