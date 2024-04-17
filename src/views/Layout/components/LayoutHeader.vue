@@ -1,5 +1,28 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+// 创建响应式数据
+const searchQuery = ref('');
+
+// 获取路由对象
+const router = useRouter();
+
+// 搜索方法
+const search = () => {
+  const search = searchQuery.value.trim();
+  if(search) {
+    console.log('执行搜索：', search);
+
+    // 构建带参数的路由路径
+    const routeParams = {
+      path: `/search/${search}`,
+    };
+
+    // 导航到指定路由
+    router.push(routeParams);
+  }
+};
 </script>
 
 <template>
@@ -24,7 +47,7 @@
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜尋">
+        <input type="text" placeholder="搜尋" v-model="searchQuery" @keyup.enter="search">
       </div>
       <!-- 头部购物车 -->
       

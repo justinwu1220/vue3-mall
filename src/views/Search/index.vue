@@ -1,22 +1,36 @@
 <script setup>
-import {getProductsAPI} from '@/apis/home'
-import ProductsItem from '@/views/Home/components/ProductsItem.vue'
+import {getProductsBySearchAPI} from "@/apis/search"
+import { onMounted, onUpdated, ref } from "vue";
+import {onBeforeRouteUpdate, useRoute} from "vue-router"
+import ProductsItem from "@/views/Home/components/ProductsItem.vue"
 
-const products = ref([])
-const getProducts = async () => {
-  console.log("///////////////////////");
-  const { result } = await getProductsAPI()
-  products.value = result
-  console.log(result);
+const searchData = ref({});
+const route = useRoute();
+const getProductsBySearch = async (search) => {
+    const {result} = await getProductsBySearchAPI(search);
+    searchData.value = result;
+    console.log(searchData)
 }
-onMounted( ()=> getProducts())
+onMounted( ()=>getProductsBySearch(route.params.search));
+onBeforeRouteUpdate((to)=>{
+    getProductsBySearch(to.params.search)
+})
 </script>
 
 <template>
-  <div class="home-product">
+  <div class="top-category">
+    <div class="container m-top-20">
+      <!-- 面包屑 -->
+      <div class="bread-container">
+        <el-breadcrumb separator=">">
+          <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
+          <el-breadcrumb-item>搜尋結果 : {{ route.params.search }}</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    </div>
     <div class="box">
       <ul class="products-list">
-          <li v-for="product in products" :key="product.productId">
+          <li v-for="product in searchData" :key="product.productId">
             <ProductsItem :product="product"></ProductsItem>
           </li>
       </ul>
@@ -24,26 +38,50 @@ onMounted( ()=> getProducts())
   </div>
 </template>
 
-<style scoped lang='scss'>
-.home-product {
-  background: #fff;
-  margin-top: 20px;
+
+<style scoped lang="scss">
+.top-category {
   
-  .sub {
-    margin-bottom: 2px;
+  h3 {
+    font-size: 28px;
+    color: #666;
+    font-weight: normal;
+    text-align: center;
+    line-height: 100px;
+  }
 
-    a {
-      padding: 2px 12px;
-      font-size: 16px;
-      border-radius: 4px;
+  .sub-list {
+    margin-top: 20px;
+    background-color: #fff;
 
-      &:hover {
-        background: $xtxColor;
-        color: #fff;
-      }
+    ul {
+      display: flex;
+      padding: 0 32px;
+      flex-wrap: wrap;
 
-      &:last-child {
-        margin-right: 80px;
+      li {
+        width: 168px;
+        height: 160px;
+
+
+        a {
+          text-align: center;
+          display: block;
+          font-size: 16px;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+
+          p {
+            line-height: 40px;
+          }
+
+          &:hover {
+            color: $xtxColor;
+          }
+        }
       }
     }
   }
@@ -51,6 +89,7 @@ onMounted( ()=> getProducts())
   .box {
     display: flex;
     justify-content: center;
+    background: #fff;
 
     .cover {
       width: 240px;
@@ -151,6 +190,8 @@ onMounted( ()=> getProducts())
     }
   }
 
-  
+  .bread-container {
+    padding: 25px 0;
+  }
 }
 </style>
