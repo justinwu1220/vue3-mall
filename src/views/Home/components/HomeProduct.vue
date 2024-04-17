@@ -3,13 +3,22 @@ import {getProductsAPI} from '@/apis/home'
 import ProductsItem from '@/views/Home/components/ProductsItem.vue'
 
 const products = ref([])
-const getProducts = async () => {
-  console.log("///////////////////////");
-  const { result } = await getProductsAPI()
+const itemsOfPage = ref()
+const allItems = ref()
+
+const getProducts = async (page) => {
+  const { result,limit,total } = await getProductsAPI(page)
   products.value = result
+  itemsOfPage.value = limit
+  allItems.value = total
   console.log(result);
 }
 onMounted( ()=> getProducts())
+
+const handleCurrentChange = (currentPage) => {
+
+  getProducts(currentPage);
+}
 </script>
 
 <template>
@@ -21,6 +30,12 @@ onMounted( ()=> getProducts())
           </li>
       </ul>
     </div>
+    <el-pagination 
+      background layout="prev, pager, next" 
+      :page-size="itemsOfPage" 
+      :total="allItems" 
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -51,6 +66,7 @@ onMounted( ()=> getProducts())
   .box {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 
     .cover {
       width: 240px;
@@ -151,6 +167,9 @@ onMounted( ()=> getProducts())
     }
   }
 
-  
+  .el-pagination{
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

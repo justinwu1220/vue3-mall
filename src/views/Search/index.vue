@@ -29,11 +29,15 @@ onBeforeRouteUpdate((to)=>{
       </div>
     </div>
     <div class="box">
-      <ul class="products-list">
+      <ul class="products-list" v-if="searchData.length > 0">
           <li v-for="product in searchData" :key="product.productId">
             <ProductsItem :product="product"></ProductsItem>
           </li>
       </ul>
+      <div v-else class="noContent">
+        <img src="@/assets/images/noContentFound.png">
+        <p>查無商品</p>
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +45,9 @@ onBeforeRouteUpdate((to)=>{
 
 <style scoped lang="scss">
 .top-category {
-  
+  height: 1000px;
+  background: #fff;
+
   h3 {
     font-size: 28px;
     color: #666;
@@ -89,7 +95,6 @@ onBeforeRouteUpdate((to)=>{
   .box {
     display: flex;
     justify-content: center;
-    background: #fff;
 
     .cover {
       width: 240px;
@@ -192,6 +197,19 @@ onBeforeRouteUpdate((to)=>{
 
   .bread-container {
     padding: 25px 0;
+  }
+
+  .noContent {
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+    flex-direction: column;
+    img {
+        object-fit: contain;
+        width: 700px;
+        height: 500px;
+        background: #fff;
+      }
   }
 }
 </style>

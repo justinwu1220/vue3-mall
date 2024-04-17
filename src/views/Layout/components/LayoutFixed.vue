@@ -25,7 +25,7 @@ const {y} = useScroll(window);
 
       <div class="right">
         <RouterLink to="/">品牌</RouterLink>
-        <RouterLink to="/">专题</RouterLink>
+        <RouterLink to="/">專題</RouterLink>
       </div>
     </div>
   </div>
