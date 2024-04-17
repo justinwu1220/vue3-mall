@@ -9,13 +9,13 @@
             <dd><i class="iconfont icon-question-circle-fill"></i> 問題反饋</dd>
           </dl>
           <dl>
-            <dt>关注我们</dt>
+            <dt>關注我們</dt>
             <dd><i class="iconfont icon-instagram-fill"></i> instagram</dd>
             <dd><i class="iconfont icon-facebook-fill"></i> facebook</dd>
           </dl>
           <dl>
             <dt>下載app</dt>
-            <dd class="qrcode"><img src="@/assets/images/qrcode.jpg" /></dd>
+            <dd class="qrcode"><img src="@/assets/images/qrcode.png" /></dd>
             <dd class="download">
               <span>掃描QR code</span>
               <span>下載APP</span>

@@ -13,19 +13,13 @@ const {y} = useScroll(window);
           <RouterLink to="/">首頁</RouterLink>
         </li>
         <li>
-          <RouterLink to="/">潮流玩具</RouterLink>
+          <RouterLink active-class="active" :to="`/category/POKEMON`">寶可夢</RouterLink>
         </li>
         <li>
-          <RouterLink to="/">寶可夢</RouterLink>
+          <RouterLink active-class="active" :to="`/category/KIRBY`">星之卡比</RouterLink>
         </li>
         <li>
-          <RouterLink to="/">星之卡比</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">動漫周邊</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">鋼彈模型</RouterLink>
+          <RouterLink active-class="active" :to="`/category/GUNDAM`">鋼彈模型</RouterLink>
         </li>
       </ul>
 

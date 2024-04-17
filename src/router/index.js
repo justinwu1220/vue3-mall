@@ -3,6 +3,7 @@ import Layout from '@/views/Layout/index.vue'
 import Login from '@/views/Login/index.vue'
 import Home from '@/views/Home/index.vue'
 import Category from '@/views/Category/index.vue'
+import Detail from '@/views/Detail/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,8 +17,12 @@ const router = createRouter({
           component:Home,
         },
         {
-          path: 'category',
+          path: 'category/:category',
           component:Category,
+        },
+        {
+          path: 'detail/:productId',
+          component: Detail
         }
       ]
     },
@@ -25,7 +30,12 @@ const router = createRouter({
       path: '/login',
       component:Login
     }
-  ]
+  ],
+  scrollBehavior(){
+    return{
+      top:0
+    }
+  }
 })
 
 export default router

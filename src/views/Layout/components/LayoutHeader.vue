@@ -10,11 +10,17 @@
       </h1>
       <ul class="app-header-nav">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink to="/">首頁</RouterLink>
         </li>
-        <li> <RouterLink to="/">居家</RouterLink> </li>
-        <li> <RouterLink to="/">美食</RouterLink> </li>
-        <li> <RouterLink to="/">服饰</RouterLink> </li>
+        <li>
+          <RouterLink active-class="active" :to="`/category/POKEMON`">寶可夢</RouterLink>
+        </li>
+        <li>
+          <RouterLink active-class="active" :to="`/category/KIRBY`">星之卡比</RouterLink>
+        </li>
+        <li>
+          <RouterLink active-class="active" :to="`/category/GUNDAM`">鋼彈模型</RouterLink>
+        </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
@@ -57,7 +63,7 @@
   
     li {
       margin-right: 40px;
-      width: 38px;
+      width: 80px;
       text-align: center;
   
       a {

@@ -1,8 +1,9 @@
 <script setup>
+import CategoryProduct from "@/views/Category/components/CategoryProduct.vue";
 </script>
 
 <template>
-    我是分類
+  <CategoryProduct/>
 </template>
 
 <style scoped>

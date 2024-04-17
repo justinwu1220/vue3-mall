@@ -11,7 +11,7 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 export default defineConfig({
     server: {
         host: '127.0.0.1',
-        port: 5173, // 端口
+        port: 5175, // 端口
     },
     plugins: [
         vue(),

@@ -1,8 +1,9 @@
 <script setup>
+import HomeProduct from "@/views/Home/components/HomeProduct.vue";
 </script>
 
 <template>
-    <div style="height: 1500px;">我是Home</div>
+    <HomeProduct/>
 </template>
 
 <style scoped>
