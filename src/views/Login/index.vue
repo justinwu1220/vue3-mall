@@ -1,16 +1,20 @@
 <script setup>
 import {ref} from 'vue'
+import {loginAPI} from '@/apis/user'
+import {ElMessage} from "element-plus";
+import 'element-plus/theme-chalk/el-message.css'
+import {useRouter} from "vue-router";
 
 // 1. 准备表单对象
 const form = ref({
-  account: '',
-  password: '',
+  email: 'test6@email.com',
+  password: '123',
   agree: true  
 })
 
 // 规则数据对象
 const rules = {
-  account: [
+  email: [
     {required: true, message: '帳號不能為空',trigger: 'blur'}
   ],
   password: [
@@ -20,7 +24,6 @@ const rules = {
   agree:[
     {     
       validator(rule, value, callback){
-        console.log(value)
         // 自定义校验逻辑
         // 勾选就通过 不勾选就不通过
         if (value) {
@@ -34,10 +37,16 @@ const rules = {
 }
 
 const formRef = ref(null);
+const router = useRouter();
 const doLogin = ()=>{
-  formRef.value.validate((valid)=>{
+  formRef.value.validate(async (valid)=>{
     // valid: 所有表单都通过校验  才为true
-    console.log(valid)
+    if(valid){
+        const {email,password} = form.value
+        const res = await loginAPI({email,password});
+        ElMessage({type:'success',message:'登入成功'})
+        router.replace({path: '/'})
+    }
   })
 }
 </script>
@@ -65,11 +74,11 @@ const doLogin = ()=>{
         <div class="account-box">
           <div class="form">
             <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
-              <el-form-item  label="帳號" prop="account">
-                <el-input v-model="form.account"/>
+              <el-form-item  label="帳號" prop="email">
+                <el-input v-model="form.email" placeholder="請輸入email"/>
               </el-form-item>
               <el-form-item label="密碼" prop="password">
-                <el-input v-model="form.password" show-password />
+                <el-input v-model="form.password" show-password placeholder="請輸入密碼"/>
               </el-form-item>
               <el-form-item label-width="22px" prop="agree">
                 <el-checkbox v-model="form.agree" size="large">
