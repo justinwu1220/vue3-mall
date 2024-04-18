@@ -6,6 +6,11 @@ export function getProductsAPI (page = 1) {
     if(page != 1){
         offset = (page - 1) * limit
     }
-    
-    return http.get(`/products?limit=${limit}&offset=${offset}`)
+    return http.get('/products', {
+        params: {
+          limit: limit,
+          offset: offset
+        }
+      });
+    //return http.get(`/products?limit=${limit}&offset=${offset}`)
 }

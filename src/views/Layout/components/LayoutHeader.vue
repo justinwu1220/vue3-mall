@@ -28,13 +28,10 @@ const search = () => {
 <template>
   <header class='app-header'>
     <div class="container">
-      <h1 class="logo">
+      <h1 class="logo home">
         <RouterLink to="/">旺旺商城</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home">
-          <RouterLink to="/">首頁</RouterLink>
-        </li>
         <li>
           <RouterLink active-class="active" :to="`/category/POKEMON`">寶可夢</RouterLink>
         </li>

@@ -6,12 +6,9 @@ const {y} = useScroll(window);
 <template>
   <div class="app-header-sticky" :class="{show:y>80}">
     <div class="container">
-      <RouterLink class="logo" to="/" />
+      <RouterLink class="logo home" to="/" />
       <!-- 导航区域 -->
       <ul class="app-header-nav ">
-        <li class="home">
-          <RouterLink to="/">首頁</RouterLink>
-        </li>
         <li>
           <RouterLink active-class="active" :to="`/category/POKEMON`">寶可夢</RouterLink>
         </li>

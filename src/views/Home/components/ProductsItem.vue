@@ -1,54 +1,68 @@
 <script setup>
 defineProps({
-    product: {
-        type: Object,
+    productList: {
+        type: Array,
         default: () => { }
     }
 })
 </script>
 
 <template>
-    <RouterLink :to="`/detail/${product.productId}`" class="products-item" to="/">
-        <img :src="product.imageUrl" alt="" referrerpolicy="no-referrer" />
-        <p class="name">{{ product.productName }}</p>
-        <p class="price">${{ product.price }}</p>
-    </RouterLink>
+  <el-row :gutter="10">
+    <el-col v-for="(product, index) in productList" :key="index" :span="6" style="margin-bottom:20px">
+      <RouterLink :to="`/detail/${product.productId}`" to="/">
+        <el-card class="box-card" shadow="always" :body-style="{ padding: '0px' }" >
+          <div slot="header" class="header" align="middle">
+            <img
+              :src="product.imageUrl" rel="external nofollow" 
+              class="image"
+            />
+          </div>
+          <div style="margin: 15px">
+            <div>
+              <div class="card-label">{{product.productName}}</div>
+            </div>
+            <div>
+              <div class="card-label price">${{product.price}}</div>
+            </div>
+          </div>
+        </el-card>
+      </RouterLink>
+    </el-col>
+  </el-row>
 </template>
 
 <style scoped lang="scss">
-.products-item {
-  display: block;
-  width: 220px;
-  padding: 20px 30px;
-  text-align: center;
+.el-row {
+  display:flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.el-row  .el-card {
+  min-width: 100%;
+  height: 100%;
+  margin-right: 20px;
   transition: all .5s;
-
+}
+.box-card {
   &:hover {
-    transform: translate3d(0, -3px, 0);
+    transform: translate3d(0, -30px, 0);
     box-shadow: 0 3px 8px rgb(0 0 0 / 20%);
   }
-
-  img {
-    width: 160px;
-    height: 160px;
+  .card-label {
+    color: rgb(24, 23, 23);
+    margin-left: 15px;
+    //width: 70px;
+    display: inline-block;
+    margin-bottom: 5px;
   }
-
-  p {
-    padding-top: 10px;
-  }
-
-  .name {
-    font-size: 16px;
-  }
-
-  .desc {
-    color: #999;
-    height: 29px;
-  }
-
   .price {
-    color: $priceColor;
-    font-size: 20px;
+    color: rgb(215, 34, 34);
+  }
+  .image {
+    margin-top: 10px;
+    height: 200px;
+    display: flex;
   }
 }
 </style>
