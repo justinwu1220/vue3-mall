@@ -16,7 +16,7 @@ http.interceptors.request.use(config => {
   //一般進行錯誤的統一提示，token失效的處理
 http.interceptors.response.use(res => res.data, e => {
     //統一錯誤提示
-    ElMessage({type: 'error', message: e.response.data.message})
+    ElMessage({type: 'error', message: e.response.data})
     return Promise.reject(e)
 })
   
