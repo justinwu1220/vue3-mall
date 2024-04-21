@@ -2,15 +2,13 @@
 import {ref} from 'vue'
 import {ElMessage} from "element-plus";
 import 'element-plus/theme-chalk/el-message.css'
-import {useRouter} from "vue-router";
-import {useUserStore} from "@/stores/userStore";
+import { registerAPI } from '@/apis/user'
 
-
-const userStore = useUserStore();
 
 const form = ref({
   email: '',
   password: '',
+  passwordCheck: '',
   agree: true  
 })
 
@@ -20,6 +18,9 @@ const rules = {
     { type: 'email', message: 'email格式不正確', trigger: 'blur' }
   ],
   password: [
+    {required: true, message: '密碼不能為空',trigger: 'blur'}
+  ],
+  passwordCheck: [
     {required: true, message: '密碼不能為空',trigger: 'blur'}
   ],
   agree:[
@@ -37,13 +38,13 @@ const rules = {
 
 const formRef = ref(null);
 const router = useRouter();
-const doLogin = ()=>{
+const doRegister = ()=>{
   formRef.value.validate(async (valid)=>{
     if(valid){
         const {email,password} = form.value
-        await userStore.getUserInfo({email,password});
-        ElMessage({type:'success',message:'登入成功'})
-        router.replace({path: '/'})
+        await registerAPI({email,password})
+        ElMessage({type:'success',message:'註冊成功，請重新登入'})
+        router.replace({path: '/login'})
     }
   })
 }
@@ -67,7 +68,7 @@ const doLogin = ()=>{
     <section class="login-section">
       <div class="wrapper">
         <nav>
-          <a href="javascript:;">帳戶登入</a>
+          <a href="javascript:;">註冊帳戶</a>
         </nav>
         <div class="account-box">
           <div class="form">
@@ -78,13 +79,16 @@ const doLogin = ()=>{
               <el-form-item label="密碼" prop="password">
                 <el-input v-model="form.password" show-password placeholder="請輸入密碼"/>
               </el-form-item>
+              <el-form-item  prop="passwordCheck">
+                <el-input v-model="form.passwordCheck" show-password placeholder="再次輸入密碼"/>
+              </el-form-item>
               <el-form-item label-width="22px" prop="agree">
                 <el-checkbox v-model="form.agree" size="large">
                   我已同意隱私條款和服務條款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn" @click="doLogin">點擊登入</el-button>
-              <el-button size="large" class="subBtn" @click="$router.push('/register')">註冊帳戶</el-button>
+              <el-button size="large" class="subBtn" @click="doRegister">點擊註冊</el-button>
+              <el-button size="large" class="subBtn" @click="$router.push('/login')">回到登入</el-button>
             </el-form>
           </div>
         </div>
