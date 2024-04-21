@@ -1,6 +1,5 @@
 <template>
     <footer class="app_footer">
-      <!-- 联系我们 -->
       <div class="contact">
         <div class="container">
           <dl>
@@ -28,7 +27,6 @@
           </dl>
         </div>
       </div>
-      <!-- 其它 -->
       <div class="extra">
         <div class="container">
           <div class="slogan">
@@ -45,7 +43,6 @@
               <span>品質保證</span>
             </a>
           </div>
-          <!-- 版权信息 -->
           <div class="copyright">
             <p>
               <a href="javascript:;">關於我們</a>

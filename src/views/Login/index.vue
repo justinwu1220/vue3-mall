@@ -8,27 +8,22 @@ import {useUserStore} from "@/stores/userStore";
 
 const userStore = useUserStore();
 
-// 1. 准备表单对象
 const form = ref({
   email: 'test6@email.com',
   password: '123',
   agree: true  
 })
 
-// 规则数据对象
 const rules = {
   email: [
     {required: true, message: '帳號不能為空',trigger: 'blur'}
   ],
   password: [
     {required: true, message: '密碼不能為空',trigger: 'blur'}
-    //{min: 6, max: 14, message: '密码长度要求6-14个字符',trigger: 'blur'}
   ],
   agree:[
     {     
       validator(rule, value, callback){
-        // 自定义校验逻辑
-        // 勾选就通过 不勾选就不通过
         if (value) {
           callback()
         } else {
@@ -43,12 +38,10 @@ const formRef = ref(null);
 const router = useRouter();
 const doLogin = ()=>{
   formRef.value.validate(async (valid)=>{
-    // valid: 所有表单都通过校验  才为true
     if(valid){
         const {email,password} = form.value
         await userStore.getUserInfo({email,password});
         ElMessage({type:'success',message:'登入成功'})
-        console.log(userStore.userInfo)
         router.replace({path: '/'})
     }
   })
@@ -147,6 +140,10 @@ const doLogin = ()=>{
     width: 120px;
     margin-bottom: 38px;
     font-size: 16px;
+
+    &:hover {
+      color: $xtxColor;
+    }
 
     i {
       font-size: 14px;

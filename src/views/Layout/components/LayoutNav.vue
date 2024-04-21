@@ -1,10 +1,14 @@
 <script setup>
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
+import { useCartStore } from "@/stores/cartStore";
+
+const cartStore = useCartStore()
 const userStore = useUserStore()
 const router = useRouter()
 const confirm = () => {
   userStore.clearUserInfo()
+  cartStore.clearCart()
   router.push('/login')
 }
 
@@ -27,7 +31,7 @@ const confirm = () => {
           <li><a href="javascript:;">會員中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;" @click="$router.push('/login')">請先登入</a></li>
+          <li><a href="javascript:;" @click="$router.push('/login')">登入帳號</a></li>
           <li><a href="javascript:;">幫助中心</a></li>
           <li><a href="javascript:;">關於我們</a></li>
         </template>

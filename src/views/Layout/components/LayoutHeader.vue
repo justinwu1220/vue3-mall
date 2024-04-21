@@ -1,25 +1,20 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import HeaderCart from "@/views/Layout/components/HeaderCart.vue";
 
-// 创建响应式数据
 const searchQuery = ref('');
 
-// 获取路由对象
 const router = useRouter();
 
-// 搜索方法
 const search = () => {
   const search = searchQuery.value.trim();
   if(search) {
-    console.log('执行搜索：', search);
 
-    // 构建带参数的路由路径
     const routeParams = {
       path: `/search/${search}`,
     };
 
-    // 导航到指定路由
     router.push(routeParams);
   }
 };
@@ -29,7 +24,7 @@ const search = () => {
   <header class='app-header'>
     <div class="container">
       <h1 class="logo home">
-        <RouterLink to="/">旺旺商城</RouterLink>
+        <RouterLink to="/">Justin商城</RouterLink>
       </h1>
       <ul class="app-header-nav">
         <li>
@@ -46,7 +41,7 @@ const search = () => {
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜尋" v-model="searchQuery" @keyup.enter="search">
       </div>
-      <!-- 头部购物车 -->
+      <HeaderCart/>
       
     </div>
   </header>

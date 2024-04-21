@@ -7,7 +7,6 @@ const {y} = useScroll(window);
   <div class="app-header-sticky" :class="{show:y>80}">
     <div class="container">
       <RouterLink class="logo home" to="/" />
-      <!-- 导航区域 -->
       <ul class="app-header-nav ">
         <li>
           <RouterLink active-class="active" :to="`/category/POKEMON`">寶可夢</RouterLink>
@@ -39,12 +38,10 @@ const {y} = useScroll(window);
   z-index: 999;
   background-color: #fff;
   border-bottom: 1px solid #e4e4e4;
-  // 此处为关键样式!!!
-  // 状态一：往上平移自身高度 + 完全透明
+
   transform: translateY(-100%);
   opacity: 0;
 
-  // 状态二：移除平移 + 完全不透明
   &.show {
     transition: all 0.3s linear;
     transform: none;

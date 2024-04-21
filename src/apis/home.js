@@ -12,5 +12,4 @@ export function getProductsAPI (page = 1) {
           offset: offset
         }
       });
-    //return http.get(`/products?limit=${limit}&offset=${offset}`)
 }

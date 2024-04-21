@@ -11,7 +11,6 @@ const getProducts = async (page) => {
   products.value = result
   itemsOfPage.value = limit
   allItems.value = total
-  console.log(result);
 }
 onMounted( ()=> getProducts())
 

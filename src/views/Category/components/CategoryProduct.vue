@@ -16,7 +16,6 @@ const getProductsByCategory = async (category, page=1) => {
   categoryData.value = result;
   itemsOfPage.value = limit
   allItems.value = total
-  console.log(categoryData)
 }
 onMounted( ()=>{
   getProductsByCategory(route.params.category);

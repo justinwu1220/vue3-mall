@@ -2,16 +2,39 @@
 import { getProductDetail } from '@/apis/detail'
 import { useRoute } from 'vue-router'
 import ImageView from "@/components/ImageView/index.vue"
+import {useCartStore} from "@/stores/cartStore";
+import {ElMessage} from "element-plus";
+import 'element-plus/theme-chalk/el-message.css'
+import {useUserStore} from "@/stores/userStore";
+
+const cartStore = useCartStore();
+const userStore = useUserStore()
+
 const product = ref({})
+let imageUrlList = ref([]);
 const route = useRoute()
 const getProduct = async () => {
   const res = await getProductDetail(route.params.productId)
   product.value = res
+  imageUrlList = product.value.otherImagesUrl
+  imageUrlList.unshift(product.value.imageUrl)
 }
 onMounted(() => getProduct())
 
-const createImageList = (imageUrlList=[], imageUrl) => {
-  imageUrlList.unshift(imageUrl);
+
+//購買數量
+const count = ref(1);
+//添加購物車
+const addCart = () => {
+  cartStore.addCart({
+    userId: userStore.userInfo.userId,
+    productId: product.value.productId,
+    productName: product.value.productName,
+    imageUrl: product.value.imageUrl,
+    price: product.value.price,
+    quantity: count.value,
+    selected: true  
+  })
 }
 </script>
 
@@ -32,10 +55,7 @@ const createImageList = (imageUrlList=[], imageUrl) => {
         <div>
           <div class="goods-info">
             <div class="media">
-                <div v-bind:attribute="createImageList(product.otherImagesUrl,product.imageUrl)" ></div>
-                <ImageView :imageList="product.otherImagesUrl"/>
-
-              <!-- 统计数量 -->
+                <ImageView :imageList="imageUrlList"/>
               <ul class="goods-sales">
                 <li>
                   <p>销量人气</p>
@@ -60,11 +80,11 @@ const createImageList = (imageUrlList=[], imageUrl) => {
               </ul>
             </div>
             <div class="spec">
-              <!-- 商品信息区 -->
+              <!-- 商品信息區 -->
               <p class="g-name"> {{ product.productName }} </p>
               <p class="g-desc">{{ product.description }} </p>
               <p class="g-price">
-                <span>${{ product.price }}</span>
+                <span>$ {{ product.price }}</span>
               </p>
               <div class="g-service">
                 <dl>
@@ -80,11 +100,9 @@ const createImageList = (imageUrlList=[], imageUrl) => {
                   </dd>
                 </dl>
               </div>
-              <!-- 数据组件 -->
-
-              <!-- 按钮组件 -->
+              <el-input-number v-model="count" :min="1"/>
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addCart">
                   加入購物車
                 </el-button>
               </div>
@@ -345,7 +363,9 @@ const createImageList = (imageUrlList=[], imageUrl) => {
   margin-top: 20px;
 
 }
-
+.el-input-number{
+  margin-top: 60px;
+}
 .bread-container {
   padding: 25px 0;
 }

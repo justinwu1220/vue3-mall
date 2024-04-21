@@ -23,7 +23,7 @@ defineProps({
               <div class="card-label">{{product.productName}}</div>
             </div>
             <div>
-              <div class="card-label price">${{product.price}}</div>
+              <div class="card-label price">$ {{product.price}}</div>
             </div>
           </div>
         </el-card>

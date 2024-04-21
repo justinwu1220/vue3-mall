@@ -14,7 +14,6 @@ const getProductsBySearch = async (search, page=1) => {
   searchData.value = result;
   itemsOfPage.value = limit
   allItems.value = total
-  console.log(searchData)
 }
 onMounted( ()=>getProductsBySearch(route.params.search));
 
