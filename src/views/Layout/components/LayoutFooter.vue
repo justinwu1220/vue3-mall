@@ -18,7 +18,7 @@
             <dd class="download">
               <span>掃描QR code</span>
               <span>下載APP</span>
-              <a href="javascript:;">下載頁面</a>
+              <a href="https://github.com/justinwu1220/vue3-mall" target="_blank">下載頁面</a>
             </dd>
           </dl>
           <dl>

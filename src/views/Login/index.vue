@@ -59,8 +59,6 @@ const doLogin = ()=>{
         </h1>
         <RouterLink class="entry" to="/">
           不登入進入網站
-          <i class="iconfont icon-angle-right"></i>
-          <i class="iconfont icon-angle-right"></i>
         </RouterLink>
       </div>
     </header>

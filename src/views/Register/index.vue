@@ -21,7 +21,8 @@ const rules = {
     {required: true, message: '密碼不能為空',trigger: 'blur'}
   ],
   passwordCheck: [
-    {required: true, message: '密碼不能為空',trigger: 'blur'}
+    {required: true, message: '密碼不能為空',trigger: 'blur'},
+    { validator: validatePasswordCheck, trigger: 'blur' }
   ],
   agree:[
     {     
@@ -34,6 +35,15 @@ const rules = {
       }
     }
   ]
+}
+
+function validatePasswordCheck(rule, value, callback) {
+  if (value !== form.value.password) {
+    console.log(value+" != "+form.password)
+    callback(new Error('密碼不一致'));
+  } else {
+    callback();
+  }
 }
 
 const formRef = ref(null);
@@ -60,8 +70,6 @@ const doRegister = ()=>{
         </h1>
         <RouterLink class="entry" to="/">
           不登入進入網站
-          <i class="iconfont icon-angle-right"></i>
-          <i class="iconfont icon-angle-right"></i>
         </RouterLink>
       </div>
     </header>
