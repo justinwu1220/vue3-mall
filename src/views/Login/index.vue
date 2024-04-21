@@ -9,8 +9,8 @@ import {useUserStore} from "@/stores/userStore";
 const userStore = useUserStore();
 
 const form = ref({
-  email: 'test6@email.com',
-  password: '123',
+  email: '',
+  password: '',
   agree: true  
 })
 
