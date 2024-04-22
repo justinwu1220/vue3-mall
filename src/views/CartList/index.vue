@@ -1,6 +1,25 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
+import { useUserStore } from '@/stores/userStore'
+import {useRouter} from "vue-router";
+import {ElMessage} from "element-plus";
+import 'element-plus/theme-chalk/el-message.css'
+
 const cartStore = useCartStore()
+const userStore = useUserStore()
+const router = useRouter();
+
+const checkout = () => {
+  if(!userStore.userInfo.token){
+    ElMessage({type:'error',message:'需先登入才能下單'});
+  }else if(cartStore.cartList.length == 0){
+    ElMessage({type:'error',message:'購物車列表為空'});
+  }else if(cartStore.selectedCount == 0){
+    ElMessage({type:'error',message:'未勾選商品'});
+  }else{
+    router.push({path: '/checkout'})
+  }
+}
 </script>
 
 <template>
@@ -75,7 +94,7 @@ const cartStore = useCartStore()
           <span class="red">$ {{cartStore.selectedPrice}}</span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >下單結算</el-button>
+          <el-button size="large" type="primary" @click="checkout">下單結算</el-button>
         </div>
       </div>
     </div>

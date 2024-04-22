@@ -39,7 +39,6 @@ const rules = {
 
 function validatePasswordCheck(rule, value, callback) {
   if (value !== form.value.password) {
-    console.log(value+" != "+form.password)
     callback(new Error('密碼不一致'));
   } else {
     callback();
