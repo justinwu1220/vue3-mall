@@ -1,12 +1,15 @@
 <script setup>
-import { getAddressInfoAPI, createAddressInfoAPI, createOrderInfoAPI } from '@/apis/checkout'
+import { getAddressInfoAPI, createAddressInfoAPI} from '@/apis/user'
+import { createOrderInfoAPI } from '@/apis/checkout'
 import { useUserStore } from '@/stores/userStore'
 import { useCartStore } from '@/stores/cartStore'
 import {ref} from 'vue'
 import {ElMessage,ElMessageBox} from "element-plus";
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const cartStore = useCartStore()
 const userStore = useUserStore()
 const checkInfoList = ref([])
@@ -92,7 +95,9 @@ const submitOrder = () => {
             }
           )
           await cartStore.updateLoginCartList(userId)
+          router.push("/member/order")
         })
+        
 }
 </script>
 
