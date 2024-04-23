@@ -1,10 +1,11 @@
 <script setup>
-import { getAddressInfoAPI, createAddressInfoAPI } from '@/apis/checkout'
+import { getAddressInfoAPI, createAddressInfoAPI, createOrderInfoAPI } from '@/apis/checkout'
 import { useUserStore } from '@/stores/userStore'
 import { useCartStore } from '@/stores/cartStore'
 import {ref} from 'vue'
-import {ElMessage} from "element-plus";
+import {ElMessage,ElMessageBox} from "element-plus";
 import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 
 const cartStore = useCartStore()
 const userStore = useUserStore()
@@ -68,6 +69,31 @@ const addAddress = ()=>{
     }
   })
 }
+
+const submitOrder = () => {
+  ElMessageBox.alert('請確認訂單內容是否正確', '即將送出訂單', {
+            confirmButtonText: '確認',
+            cancelButtonText: '取消',
+            showCancelButton: true
+        }).then(async () => {
+          ElMessage({type:'success',message:'送出訂單成功'})
+          const userId = userStore.userInfo.userId
+          const buyItemList = selectedItemList.value
+          const receiver = curAddress.value.receiver
+          const contact = curAddress.value.contact
+          const address = curAddress.value.address
+          await createOrderInfoAPI(
+            userId,
+            {
+              buyItemList,
+              receiver,
+              contact,
+              address
+            }
+          )
+          await cartStore.updateLoginCartList(userId)
+        })
+}
 </script>
 
 <template>
@@ -122,18 +148,6 @@ const addAddress = ()=>{
             </tbody>
           </table>
         </div>
-        <!--h3 class="box-title">配送時間</h3>
-        <div class="box-body">
-          <a class="my-btn active" href="javascript:;">不限送货时间：周一至周日</a>
-          <a class="my-btn" href="javascript:;">工作日送货：周一至周五</a>
-          <a class="my-btn" href="javascript:;">双休日、假日送货：周六至周日</a>
-        </div>
-        <h3 class="box-title">支付方式</h3>
-        <div class="box-body">
-          <a class="my-btn active" href="javascript:;">在线支付</a>
-          <a class="my-btn" href="javascript:;">货到付款</a>
-          <span style="color:#999">货到付款需付5元手续费</span>
-        </div-->
         <h3 class="box-title">金額明細</h3>
         <div class="box-body">
           <div class="total">
@@ -147,16 +161,16 @@ const addAddress = ()=>{
             </dl>
             <dl>
               <dt>運<i></i>費 ：</dt>
-              <dd>$ 60</dd>
+              <dd>$ 0</dd>
             </dl>
             <dl>
               <dt>應付總額 ：</dt>
-              <dd class="price">$ {{cartStore.selectedPrice + 60}} </dd>
+              <dd class="price">$ {{cartStore.selectedPrice + 0}} </dd>
             </dl>
           </div>
         </div>
         <div class="submit">
-          <el-button type="primary" size="large" >提交訂單</el-button>
+          <el-button type="primary" size="large" @click="submitOrder">送出訂單</el-button>
         </div>
       </div>
     </div>

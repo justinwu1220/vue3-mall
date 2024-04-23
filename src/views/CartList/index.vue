@@ -41,9 +41,9 @@ const checkout = () => {
           </thead>
           <!-- 商品列表 -->
           <tbody>
-            <tr v-for="i in cartStore.cartList" :key="i.id">
+            <tr v-for="i in cartStore.cartList" :key="i.cartItemId">
               <td>
-                <el-checkbox v-model="i.selected"  />
+                <el-checkbox v-model="i.selected" @change="cartStore.updateCartItem(i)"/>
               </td>
               <td>
                 <div class="goods">
