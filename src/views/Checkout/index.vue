@@ -104,6 +104,13 @@ const submitOrder = () => {
 <template>
   <div class="xtx-pay-checkout-page">
     <div class="container">
+      <div class="bread-container">
+        <el-breadcrumb separator=">">
+          <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/cartlist' }">購物車</el-breadcrumb-item>
+          <el-breadcrumb-item >結算</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="wrapper">
         <h3 class="box-title">收貨地址</h3>
         <div class="box-body">
@@ -179,6 +186,7 @@ const submitOrder = () => {
         </div>
       </div>
     </div>
+    <br><br>
   </div>
 
   <el-dialog v-model="showDialog" title="切換收貨地址" width="30%" center>
@@ -235,11 +243,19 @@ const submitOrder = () => {
 
 <style scoped lang="scss">
 .xtx-pay-checkout-page {
-  margin-top: 20px;
+  background: #fff;
+  min-height: 1000px;
+ 
+  .bread-container {
+    padding: 25px 0;
+  }
 
   .wrapper {
     background: #fff;
     padding: 0 20px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--el-card-border-color);
+    border-radius: var(--el-card-border-radius);
 
     .box-title {
       font-size: 16px;

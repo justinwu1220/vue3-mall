@@ -51,6 +51,7 @@ const search = () => {
 <style scoped lang='scss'>
 .app-header {
   background: #fff;
+  border-bottom: 1px solid #eaeaea;
 
   .container {
     display: flex;

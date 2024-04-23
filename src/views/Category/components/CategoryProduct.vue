@@ -61,7 +61,7 @@ const handleCurrentChange = (currentPage) => {
   background: #fff;
   .box {
     background: #fff;
-    height: 1300px;
+    min-height: 1000px;
   }
 }
 

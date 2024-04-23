@@ -25,6 +25,12 @@ const checkout = () => {
 <template>
   <div class="xtx-cart-page">
     <div class="container m-top-20">
+      <div class="bread-container">
+        <el-breadcrumb separator=">">
+          <el-breadcrumb-item :to="{ path: '/' }">首頁</el-breadcrumb-item>
+          <el-breadcrumb-item >購物車</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="cart">
         <table>
           <thead>
@@ -103,11 +109,16 @@ const checkout = () => {
 
 <style scoped lang="scss">
 .xtx-cart-page {
-  margin-top: 20px;
+  background: #fff;
+  min-height: 1000px;
+
 
   .cart {
     background: #fff;
     color: #666;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--el-card-border-color);
+    border-radius: var(--el-card-border-radius);
 
     table {
       border-spacing: 0;
@@ -200,6 +211,9 @@ const checkout = () => {
     font-size: 16px;
     justify-content: space-between;
     padding: 0 30px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--el-card-border-color);
+    border-radius: var(--el-card-border-radius);
 
     .xtx-checkbox {
       color: #999;
@@ -225,5 +239,8 @@ const checkout = () => {
     line-height: 50px;
   }
 
+  .bread-container {
+  padding: 25px 0;
+  }
 }
 </style>
