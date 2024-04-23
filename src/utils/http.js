@@ -1,7 +1,7 @@
 import axios from "axios";
 import {ElMessage,ElMessageBox} from "element-plus";
 import 'element-plus/theme-chalk/el-message.css'
-import 'element-plus/theme-chalk/index.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router';
 import router from '@/router';

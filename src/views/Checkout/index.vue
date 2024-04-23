@@ -1,18 +1,22 @@
 <script setup>
 import { getAddressInfoAPI, createAddressInfoAPI } from '@/apis/checkout'
 import { useUserStore } from '@/stores/userStore'
+import { useCartStore } from '@/stores/cartStore'
 import {ref} from 'vue'
 import {ElMessage} from "element-plus";
 import 'element-plus/theme-chalk/el-message.css'
 
+const cartStore = useCartStore()
 const userStore = useUserStore()
 const checkInfoList = ref([])
 const curAddress = ref({})
+const selectedItemList = ref([])
 
 const getAddressInfo = async () => {
   const res = await getAddressInfoAPI(userStore.userInfo.userId)
   checkInfoList.value = res
   curAddress.value = checkInfoList.value[0]
+  selectedItemList.value = cartStore.getSelectedItems()
 }
 
 onMounted(() => getAddressInfo())
@@ -99,26 +103,26 @@ const addAddress = ()=>{
                 <th width="170">實付</th>
               </tr>
             </thead>
-            <!--tbody>
-              <tr v-for="i in checkInfo.goods" :key="i.id">
+            <tbody>
+              <tr v-for="i in selectedItemList" :key="i.productId">
                 <td>
                   <a href="javascript:;" class="info">
-                    <img :src="i.picture" alt="">
+                    <img :src="i.imageUrl" alt="">
                     <div class="right">
-                      <p>{{ i.name }}</p>
-                      <p>{{ i.attrsText }}</p>
+                      <br>
+                      <p>{{ i.productName }}</p>
                     </div>
                   </a>
                 </td>
-                <td>&yen;{{ i.price }}</td>
-                <td>{{ i.count }}</td>
-                <td>&yen;{{ i.totalPrice }}</td>
-                <td>&yen;{{ i.totalPayPrice }}</td>
+                <td>$ {{ i.price }}</td>
+                <td>{{ i.quantity }}</td>
+                <td>$ {{ (i.price * i.quantity) }}</td>
+                <td>$ {{ (i.price * i.quantity) }}</td>
               </tr>
-            </tbody-->
+            </tbody>
           </table>
         </div>
-        <h3 class="box-title">配送时间</h3>
+        <!--h3 class="box-title">配送時間</h3>
         <div class="box-body">
           <a class="my-btn active" href="javascript:;">不限送货时间：周一至周日</a>
           <a class="my-btn" href="javascript:;">工作日送货：周一至周五</a>
@@ -129,28 +133,28 @@ const addAddress = ()=>{
           <a class="my-btn active" href="javascript:;">在线支付</a>
           <a class="my-btn" href="javascript:;">货到付款</a>
           <span style="color:#999">货到付款需付5元手续费</span>
-        </div>
+        </div-->
         <h3 class="box-title">金額明細</h3>
-        <!--div class="box-body">
+        <div class="box-body">
           <div class="total">
             <dl>
-              <dt>商品件數：</dt>
-              <dd>{{ checkInfo.summary?.goodsCount }}件</dd>
+              <dt>商品件數 ：</dt>
+              <dd>{{ cartStore.selectedCount }}件</dd>
             </dl>
             <dl>
-              <dt>商品總價</dt>
-              <dd>$ {{ checkInfo.summary?.totalPrice.toFixed(2) }}</dd>
+              <dt>商品總價 ：</dt>
+              <dd>$ {{cartStore.selectedPrice}}</dd>
             </dl>
             <dl>
-              <dt>運<i></i>費：</dt>
-              <dd>$ {{ checkInfo.summary?.postFee.toFixed(2) }}</dd>
+              <dt>運<i></i>費 ：</dt>
+              <dd>$ 60</dd>
             </dl>
             <dl>
-              <dt>應付總額</dt>
-              <dd class="price">{{ checkInfo.summary?.totalPayPrice.toFixed(2) }}</dd>
+              <dt>應付總額 ：</dt>
+              <dd class="price">$ {{cartStore.selectedPrice + 60}} </dd>
             </dl>
           </div>
-        </div-->
+        </div>
         <div class="submit">
           <el-button type="primary" size="large" >提交訂單</el-button>
         </div>
