@@ -51,10 +51,10 @@ const handleEdit = (index: number, row: mappedArray) => {
   console.log(index, row)
 }
 const handleDelete = async (index: number, row: mappedArray) => {
-  ElMessageBox.alert('請確認是否刪除', '即將刪除商品', {
-            confirmButtonText: '確認',
+  ElMessageBox.alert('即將刪除商品 Id : '+row.productId+'，請確認是否刪除', '警告 !', {
+            confirmButtonText: '確認刪除',
             cancelButtonText: '取消',
-            showCancelButton: true
+            showCancelButton: true,
         }).then(async () => {
           await deleteProductAPI(row.productId)
           ElMessage({type:'success',message:'刪除成功'})
