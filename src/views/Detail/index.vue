@@ -136,6 +136,7 @@ const addCart = () => {
 
 <style scoped lang='scss'>
 .xtx-goods-page {
+  min-height: 1000px;
   .goods-info {
     min-height: 600px;
     background: #fff;
@@ -151,6 +152,12 @@ const addCart = () => {
       flex: 1;
       padding: 30px 30px 30px 0;
     }
+  }
+
+  .info-container{
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--el-card-border-color);
+    border-radius: var(--el-card-border-radius);
   }
 
   .goods-footer {
@@ -367,6 +374,6 @@ const addCart = () => {
   margin-top: 60px;
 }
 .bread-container {
-  padding: 25px 0;
+  padding: 50px 0;
 }
 </style>
