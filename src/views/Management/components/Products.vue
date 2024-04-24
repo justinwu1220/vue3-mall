@@ -1,7 +1,10 @@
-<script setup>
+<script lang="ts" setup>
 import {useRoute} from "vue-router"
 import {getProductsByCategoryAPI} from "@/apis/category"
-import ProductsItem from "@/views/Home/components/ProductsItem.vue"
+import {deleteProductAPI} from '@/apis/product'
+import {ElMessage,ElMessageBox} from "element-plus";
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 
 const route = useRoute();
 var cp;
@@ -10,23 +13,6 @@ const itemsOfPage = ref()
 const allItems = ref()
 const mappedArray = ref([])
 
-/*const getProductsByCategory = async (category, page=1) => {
-  cp=page;
-  const {result,limit,total} = await getProductsByCategoryAPI(category, page);
-  categoryData.value = result;
-  itemsOfPage.value = limit
-  allItems.value = total
-  mappedArray.value = result.map(item => ({
-    productId: item.productId,
-    productName: item.productName,
-    category: item.category,
-    imageUrl: item.imageUrl,
-    price: item.price,
-    stock: item.stock,
-    createdDate: item.createdDate,
-    lastModifiedDate: item.lastModifiedDate
-  }));
-}*/
 const getProductsByCategory = async (c, page=1) => {
   cp=page;
   const params = {
@@ -60,6 +46,21 @@ onBeforeRouteUpdate((to)=>{
   getProductsByCategory(to.params.category)
 })
 
+
+const handleEdit = (index: number, row: mappedArray) => {
+  console.log(index, row)
+}
+const handleDelete = async (index: number, row: mappedArray) => {
+  ElMessageBox.alert('請確認是否刪除', '即將刪除商品', {
+            confirmButtonText: '確認',
+            cancelButtonText: '取消',
+            showCancelButton: true
+        }).then(async () => {
+          await deleteProductAPI(row.productId)
+          ElMessage({type:'success',message:'刪除成功'})
+          getProductsByCategory(route.params.category)
+        })
+}
 </script>
 
 <template>

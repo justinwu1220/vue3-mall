@@ -13,3 +13,7 @@ export function getProductsAPI (page = 1) {
         }
       });
 }
+
+export function deleteProductAPI (productId) {
+  return http.delete('/products/' + productId);
+}

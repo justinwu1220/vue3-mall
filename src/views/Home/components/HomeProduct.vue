@@ -1,5 +1,5 @@
 <script setup>
-import {getProductsAPI} from '@/apis/home'
+import {getProductsAPI} from '@/apis/product'
 import ProductsItem from '@/views/Home/components/ProductsItem.vue'
 
 const products = ref([])

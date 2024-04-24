@@ -7,7 +7,6 @@ export function getProductsByCategoryAPI(params){
     if(page != 1){
         offset = (page - 1) * limit
     }
-    console.log(category)
     if(category == 'ALL') category=''
     return http.get('/products',{
         params:{
