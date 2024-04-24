@@ -52,7 +52,7 @@ const handleCurrentChange = (currentPage) => {
 }
 
 .bread-container {
-  padding: 25px 0;
+  padding: 50px 0;
 }
 
 .el-pagination{

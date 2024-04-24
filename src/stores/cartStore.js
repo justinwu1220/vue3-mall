@@ -13,10 +13,9 @@ export const useCartStore = defineStore(
         const isLogin = computed(()=>userStore.userInfo.token);
 
         // 獲取登入後最新購物車列表action
-        const updateLoginCartList = async (userId) => {
+        const updateLoginCartList = async () => {
             if(isLogin.value){
-                userId = userStore.userInfo.userId
-                const res = await findNewCartListAPI(userId)
+                const res = await findNewCartListAPI()
                 cartList.value = res
             }
         }
@@ -25,14 +24,13 @@ export const useCartStore = defineStore(
             //判斷商品是否在購物車
             const findItem = cartList.value.find(item=>products.productId === item.productId);
             if(isLogin.value){
-                let id = userStore.userInfo.userId
                 if(findItem){
                     findItem.quantity += products.quantity
                     updateCartItem(findItem)
                 }
                 else{
-                    await insertCartAPI(id,products)
-                    await updateLoginCartList(id)
+                    await insertCartAPI(products)
+                    await updateLoginCartList()
                 }
             }else{
                 if(findItem){
@@ -47,10 +45,9 @@ export const useCartStore = defineStore(
         }
         const deleteCart = async (cartItemId) => {
             if(isLogin.value){
-                let id = userStore.userInfo.userId
                 //登入後的刪除購物車
-                await deleteCartAPI(id, cartItemId)
-                await updateLoginCartList(id)
+                await deleteCartAPI(cartItemId)
+                await updateLoginCartList()
             }else{
                 const index = cartList.value.findIndex((item) => cartItemId === item.cartItemId)
                 cartList.value.splice(index, 1)
@@ -71,9 +68,8 @@ export const useCartStore = defineStore(
         }
         const updateCartItem = async (cartItem) => {
             if (isLogin.value) {
-                let id = userStore.userInfo.userId
                 const {cartItemId, userId, productId, quantity, selected} = cartItem
-                await updateCartItemAPI(id,cartItemId,{userId, productId, quantity, selected})
+                await updateCartItemAPI(cartItemId,{userId, productId, quantity, selected})
             }
         }
         const isAll = computed(() => cartList.value.every((item) => item.selected))

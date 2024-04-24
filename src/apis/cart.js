@@ -1,17 +1,17 @@
 import http from "@/utils/http";
 
-export function findNewCartListAPI(userId){
-    return http.get('/users/'+ userId +'/cart');
+export function findNewCartListAPI(){
+    return http.get('/users/cart');
 }
 
-export function insertCartAPI(userId, cartItem){
-    return http.post('/users/'+ userId +'/cart' ,cartItem);
+export function insertCartAPI(cartItem){
+    return http.post('/users/cart' ,cartItem);
 }
 
-export const deleteCartAPI = (userId, cartItemId) => {
-    return http.delete('/users/'+ userId +'/cart/'+ cartItemId)
+export const deleteCartAPI = (cartItemId) => {
+    return http.delete('/users/cart/'+ cartItemId)
 }
 
-export function updateCartItemAPI(userId, cartItemId, updateData){   
-    return http.put('/users/'+ userId +'/cart/'+ cartItemId ,updateData);
+export function updateCartItemAPI(cartItemId, updateData){   
+    return http.put('/users/cart/'+ cartItemId ,updateData);
 }

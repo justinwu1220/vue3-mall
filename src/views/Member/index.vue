@@ -35,7 +35,7 @@
   flex-direction: column;
 
   .bread-container {
-    padding: 25px 0;
+    padding: 50px 0;
   }
 
   .content {
@@ -43,6 +43,8 @@
   }
 
   .xtx-member-aside {
+    min-height: 600px;
+
     width: 220px;
     margin-right: 20px;
     border-radius: 2px;

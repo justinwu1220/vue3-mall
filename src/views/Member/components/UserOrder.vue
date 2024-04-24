@@ -20,8 +20,7 @@ const itemsOfPage = ref()
 const allItems = ref()
 
 const getOrderList = async (page) => {
-  const id = userStore.userInfo.userId
-  const { result,limit,total } = await getUserOrder(id,page)
+  const { result,limit,total } = await getUserOrder(page)
   orderList.value = result
   itemsOfPage.value = limit
   allItems.value = total
@@ -44,7 +43,6 @@ const handleCurrentChange = (currentPage) => {
           <el-empty description="暫無訂單數據" />
         </div>
         <div v-else>
-
           <div class="order-item" v-for="order in orderList" :key="order.orderId">
             <div class="head">
               <span>下單時間：{{ order.createdDate }}</span>
@@ -63,7 +61,7 @@ const handleCurrentChange = (currentPage) => {
                         {{ item.productName }}
                       </p>
                     </div>
-                    <div class="price"><br>$ {{ item.amount }}</div>
+                    <div class="price"><br>$ {{ item.amount/item.quantity }}</div>
                     <div class="count"><br>x {{ item.quantity }}</div>
                   </li>
                 </ul>
@@ -103,15 +101,15 @@ const handleCurrentChange = (currentPage) => {
               </div>
             </div>
           </div>
-          <div class="pagination-container">
-            <el-pagination 
-              background layout="prev, pager, next" 
-              :page-size="itemsOfPage" 
-              :total="allItems" 
-              @current-change="handleCurrentChange"
-            />
-          </div>
         </div>
+      </div>
+      <div class="pagination-container">
+        <el-pagination 
+          background layout="prev, pager, next" 
+          :page-size="itemsOfPage" 
+          :total="allItems" 
+          @current-change="handleCurrentChange"
+        />
       </div>
 
     </el-tabs>
@@ -129,7 +127,7 @@ const handleCurrentChange = (currentPage) => {
   }
 
   .main-container {
-    min-height: 500px;
+    min-height: 600px;
 
     .holder-container {
       min-height: 500px;

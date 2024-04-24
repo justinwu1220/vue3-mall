@@ -1,6 +1,6 @@
 <script setup>
 import { getAddressInfoAPI, createAddressInfoAPI} from '@/apis/user'
-import { createOrderInfoAPI } from '@/apis/checkout'
+import { createOrderInfoAPI } from '@/apis/order'
 import { useUserStore } from '@/stores/userStore'
 import { useCartStore } from '@/stores/cartStore'
 import {ref} from 'vue'
@@ -17,7 +17,7 @@ const curAddress = ref({})
 const selectedItemList = ref([])
 
 const getAddressInfo = async () => {
-  const res = await getAddressInfoAPI(userStore.userInfo.userId)
+  const res = await getAddressInfoAPI()
   checkInfoList.value = res
   curAddress.value = checkInfoList.value[0]
   selectedItemList.value = cartStore.getSelectedItems()
@@ -63,9 +63,8 @@ const rules = {
 const addAddress = ()=>{
   formRef.value.validate(async (valid)=>{
     if(valid){
-        const userId = userStore.userInfo.userId
         const {receiver,contact,address} = form.value
-        await createAddressInfoAPI(userId, {userId,receiver,contact,address})
+        await createAddressInfoAPI({receiver,contact,address})
         showAddAddress.value = false
         ElMessage({type:'success',message:'新增成功'})
         getAddressInfo()
@@ -80,21 +79,17 @@ const submitOrder = () => {
             showCancelButton: true
         }).then(async () => {
           ElMessage({type:'success',message:'送出訂單成功'})
-          const userId = userStore.userInfo.userId
           const buyItemList = selectedItemList.value
           const receiver = curAddress.value.receiver
           const contact = curAddress.value.contact
           const address = curAddress.value.address
-          await createOrderInfoAPI(
-            userId,
-            {
+          await createOrderInfoAPI({
               buyItemList,
               receiver,
               contact,
               address
-            }
-          )
-          await cartStore.updateLoginCartList(userId)
+            })
+          await cartStore.updateLoginCartList()
           router.push("/member/order")
         })
         

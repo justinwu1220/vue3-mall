@@ -8,10 +8,10 @@ export function registerAPI(user){
     return http.post('/users/register',user);
 }
 
-export const getAddressInfoAPI = (userId) => {
-    return http.get('/users/'+ userId +'/addressInfo');    
+export const getAddressInfoAPI = () => {
+    return http.get('/users/addressInfo');    
 }
 
-export const createAddressInfoAPI = (userId, data) => {
-    return http.post('/users/'+ userId +'/addressInfo', data);    
+export const createAddressInfoAPI = (data) => {
+    return http.post('/users/addressInfo', data);    
 }
