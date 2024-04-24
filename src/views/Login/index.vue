@@ -43,7 +43,11 @@ const doLogin = ()=>{
         const {email,password} = form.value
         await userStore.getUserInfo({email,password});
         ElMessage({type:'success',message:'登入成功'})
-        router.replace({path: '/'})
+        if(userStore.userInfo.authority == "ADMIN"){
+          router.replace({path: '/management'})
+        }else{
+          router.replace({path: '/'})
+        }
     }
   })
 }

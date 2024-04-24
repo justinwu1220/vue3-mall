@@ -58,24 +58,19 @@ const addCart = () => {
                 <ImageView :imageList="imageUrlList"/>
               <ul class="goods-sales">
                 <li>
-                  <p>销量人气</p>
+                  <p>銷量人氣</p>
                   <p> 100+ </p>
-                  <p><i class="iconfont icon-task-filling"></i>销量人气</p>
+                  <p><i class="iconfont icon-task-filling"></i></p>
                 </li>
                 <li>
-                  <p>商品评价</p>
+                  <p>商品評價</p>
                   <p>200+</p>
-                  <p><i class="iconfont icon-comment-filling"></i>查看评价</p>
+                  <p><i class="iconfont icon-comment-filling"></i></p>
                 </li>
                 <li>
-                  <p>收藏人气</p>
+                  <p>收藏人氣</p>
                   <p>300+</p>
-                  <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
-                </li>
-                <li>
-                  <p>品牌信息</p>
-                  <p>400+</p>
-                  <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
+                  <p><i class="iconfont icon-favorite-filling"></i></p>
                 </li>
               </ul>
             </div>
@@ -100,6 +95,7 @@ const addCart = () => {
                   </dd>
                 </dl>
               </div>
+              <p class="g-stock">商品數量 : {{ product.stock }} </p>
               <el-input-number v-model="count" :min="1"/>
               <div>
                 <el-button size="large" class="btn" @click="addCart">
@@ -201,6 +197,11 @@ const addCart = () => {
     font-size: 22px;
   }
 
+  .g-stock {
+    font-size: 16px;
+    color: #666;
+  }
+
   .g-desc {
     color: #999;
     margin-top: 10px;
@@ -228,7 +229,8 @@ const addCart = () => {
     background: #f5f5f5;
     width: 500px;
     padding: 20px 10px 0 10px;
-    margin-top: 10px;
+    margin-top: 50px;
+    margin-bottom: 30px;
 
     dl {
       padding-bottom: 20px;
@@ -371,7 +373,7 @@ const addCart = () => {
 
 }
 .el-input-number{
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .bread-container {
   padding: 50px 0;

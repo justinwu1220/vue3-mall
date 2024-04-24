@@ -9,7 +9,7 @@ const router = useRouter()
 const confirm = () => {
   userStore.clearUserInfo()
   cartStore.clearCart()
-  router.replace('/login')
+  router.push('/login')
 }
 
 </script>
@@ -18,23 +18,14 @@ const confirm = () => {
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="userStore.userInfo.token">
-          <li><a href="javascript:;"> {{ userStore.userInfo.email }}</a></li>
-          <li>
-            <el-popconfirm title="確認退出嗎??" @confirm="confirm" confirm-button-text="確認" cancel-button-text="取消">
-              <template #reference>
-                <a href="javascript:;">退出登入</a>
-              </template>
-            </el-popconfirm>
-          </li>
-          <li><a href="javascript:;" @click="$router.push('/member/order')">我的訂單</a></li>
-          <li><a href="javascript:;" @click="$router.push('/member')">會員中心</a></li>
-        </template>
-        <template v-else>
-          <li><a href="javascript:;" @click="$router.push('/login')">登入帳號</a></li>
-          <li><a href="javascript:;">幫助中心</a></li>
-          <li><a href="javascript:;">關於我們</a></li>
-        </template>
+        <li><a href="javascript:;"> {{ userStore.userInfo.email }}</a></li>
+        <li>
+        <el-popconfirm title="確認退出嗎??" @confirm="confirm" confirm-button-text="確認" cancel-button-text="取消">
+            <template #reference>
+            <a href="javascript:;">退出登入</a>
+            </template>
+        </el-popconfirm>
+        </li>
       </ul>
     </div>
   </nav>
@@ -44,6 +35,7 @@ const confirm = () => {
 <style scoped lang="scss">
 .app-topnav {
   background: #333;
+  width: 100%;
   ul {
     display: flex;
     height: 53px;

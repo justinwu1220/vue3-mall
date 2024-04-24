@@ -11,6 +11,10 @@ import Checkout from '@/views/Checkout/index.vue'
 import Member from '@/views/Member/index.vue'
 import UserInfo from '@/views/Member/components/UserInfo.vue'
 import UserOrder from '@/views/Member/components/UserOrder.vue'
+import Management from '@/views/Management/index.vue'
+import ManageProducts from '@/views/Management/components/Products.vue'
+import ManageHome from '@/views/Management/components/Home.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +30,6 @@ const router = createRouter({
         {
           path: 'search/:search',
           component:Search,
-          //props: true
         },
         {
           path: 'category/:category',
@@ -67,6 +70,20 @@ const router = createRouter({
     {
       path: '/register',
       component:Register
+    },
+    {
+      path: '/management',
+      component:Management,
+      children:[
+        {
+          path: '',
+          component:ManageHome
+        },
+        {
+          path: 'products/:category',
+          component:ManageProducts
+        }
+      ]
     }
   ],
   scrollBehavior(){
