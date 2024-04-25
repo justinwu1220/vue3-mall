@@ -17,7 +17,7 @@ const router
     <el-container class="layout-container-demo" style="height: 500px">
         <el-aside width="200px">
             <el-scrollbar>
-                <el-menu router :default-openeds="['1']">
+                <el-menu router :default-openeds="[]">
                     <el-sub-menu index="1">
                         <template #title>
                             <el-icon><message /></el-icon>商品列表

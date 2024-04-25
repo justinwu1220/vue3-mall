@@ -14,6 +14,10 @@ export function getProductsAPI (page = 1) {
       });
 }
 
+export function addProductAPI (data) {
+  return http.post('/products', data);
+}
+
 export function updateProductAPI (productId, updateData) {
   return http.put('/products/' + productId, updateData);
 }
