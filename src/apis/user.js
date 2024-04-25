@@ -15,3 +15,7 @@ export const getAddressInfoAPI = () => {
 export const createAddressInfoAPI = (data) => {
     return http.post('/users/addressInfo', data);    
 }
+
+export const getAllUsersAPI = () => {
+    return http.get('/users');    
+}

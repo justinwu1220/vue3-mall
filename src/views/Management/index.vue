@@ -17,10 +17,13 @@ const router
     <el-container class="layout-container-demo" style="height: 500px">
         <el-aside width="200px">
             <el-scrollbar>
-                <el-menu router :default-openeds="[]">
+                <el-menu router :default-openeds="['0']">
+                    <el-menu-item index="/management">
+                        <i class="iconfont icon-home"> 首頁</i>
+                    </el-menu-item>
                     <el-sub-menu index="1">
                         <template #title>
-                            <el-icon><message /></el-icon>商品列表
+                            <i class="iconfont icon-product"> 商品列表</i> 
                         </template>
                         <el-menu-item :index="`/management/products/ALL`">
                             全部商品
@@ -37,37 +40,25 @@ const router
                     </el-sub-menu>
                     <el-sub-menu index="2">
                         <template #title>
-                        <el-icon><icon-menu /></el-icon>訂單列表
+                            <i class="iconfont icon-order"> 訂單列表</i>
                         </template>
-                        <el-menu-item-group>
-                        <template #title>Group 1</template>
-                        <el-menu-item index="2-1">Option 1</el-menu-item>
-                        <el-menu-item index="2-2">Option 2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="Group 2">
-                        <el-menu-item index="2-3">Option 3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-sub-menu index="2-4">
-                        <template #title>Option 4</template>
-                        <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-                        </el-sub-menu>
+                        <el-menu-item index="/management/orders">
+                            全部訂單
+                        </el-menu-item>
+                        <el-menu-item index="">
+                            待付款
+                        </el-menu-item>
+                        <el-menu-item index="">
+                            已完成
+                        </el-menu-item>
                     </el-sub-menu>
                     <el-sub-menu index="3">
                         <template #title>
-                        <el-icon><setting /></el-icon>會員列表
+                            <i class="iconfont icon-member"> 會員列表</i>
                         </template>
-                        <el-menu-item-group>
-                        <template #title>Group 1</template>
-                        <el-menu-item index="3-1">Option 1</el-menu-item>
-                        <el-menu-item index="3-2">Option 2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="Group 2">
-                        <el-menu-item index="3-3">Option 3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-sub-menu index="3-4">
-                        <template #title>Option 4</template>
-                        <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
-                        </el-sub-menu>
+                        <el-menu-item index="/management/members">
+                            全部會員
+                        </el-menu-item>
                     </el-sub-menu>
                 </el-menu>
             </el-scrollbar>

@@ -14,6 +14,8 @@ import UserOrder from '@/views/Member/components/UserOrder.vue'
 import Management from '@/views/Management/index.vue'
 import ManageProducts from '@/views/Management/components/Products.vue'
 import ManageHome from '@/views/Management/components/Home.vue'
+import ManageOrders from '@/views/Management/components/Orders.vue'
+import ManageMembers from '@/views/Management/components/Members.vue'
 
 
 const router = createRouter({
@@ -82,6 +84,14 @@ const router = createRouter({
         {
           path: 'products/:category',
           component:ManageProducts
+        },
+        {
+          path: 'orders',
+          component:ManageOrders
+        },
+        {
+          path: 'members',
+          component:ManageMembers
         }
       ]
     }
