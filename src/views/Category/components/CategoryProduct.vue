@@ -10,13 +10,6 @@ const allItems = ref()
 const route = useRoute();
 var cp;
 
-/*const getProductsByCategory = async (category, page=1) => {
-  cp=page;
-  const {result,limit,total} = await getProductsByCategoryAPI(category, page);
-  categoryData.value = result;
-  itemsOfPage.value = limit
-  allItems.value = total
-}*/
 const getProductsByCategory = async (c, page=1) => {
   cp=page;
   const params = {

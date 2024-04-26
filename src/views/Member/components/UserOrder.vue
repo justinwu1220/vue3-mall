@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from '@/stores/userStore'
-import { getUserOrder } from '@/apis/order'
+import { getUserOrderAPI } from '@/apis/order'
 import { onMounted, ref } from 'vue'
 
 const userStore = useUserStore();
@@ -18,9 +18,16 @@ const tabTypes = [
 const orderList = ref([])
 const itemsOfPage = ref()
 const allItems = ref()
+var cp;
 
-const getOrderList = async (page) => {
-  const { result,limit,total } = await getUserOrder(page)
+const getOrderList = async (page=1) => {
+  cp=page;
+  const params = {
+    limit:3,
+    offset:0,
+    page:cp
+  }
+  const { result,limit,total } = await getUserOrderAPI(params)
   orderList.value = result
   itemsOfPage.value = limit
   allItems.value = total
