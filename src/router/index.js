@@ -86,7 +86,7 @@ const router = createRouter({
           component:ManageProducts
         },
         {
-          path: 'orders',
+          path: 'orders/:state',
           component:ManageOrders
         },
         {

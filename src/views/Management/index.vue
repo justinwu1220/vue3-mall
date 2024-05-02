@@ -42,13 +42,13 @@ const router
                         <template #title>
                             <i class="iconfont icon-order"> 訂單列表</i>
                         </template>
-                        <el-menu-item index="/management/orders">
+                        <el-menu-item index="/management/orders/ALL">
                             全部訂單
                         </el-menu-item>
-                        <el-menu-item index="">
+                        <el-menu-item index="/management/orders/UNPAID">
                             待付款
                         </el-menu-item>
-                        <el-menu-item index="">
+                        <el-menu-item index="/management/orders/COMPLETED">
                             已完成
                         </el-menu-item>
                     </el-sub-menu>

@@ -14,14 +14,16 @@ import http from "@/utils/http";
     });
 }*/
 export function getUserOrderAPI(params){
-    var {limit,offset,page=1} = params
+    var {state,limit,offset,page=1} = params
     if(page != 1){
         offset = (page - 1) * limit
     }
+    if(state == 'ALL') state=''
     return http.get('/users/orders',{
         params: {
             limit: limit,
-            offset: offset
+            offset: offset,
+            state
         }
     });
 }

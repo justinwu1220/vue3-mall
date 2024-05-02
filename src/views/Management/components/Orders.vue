@@ -1,15 +1,18 @@
 <script lang="ts" setup>
+import {useRoute} from "vue-router"
 import {getUserOrderAPI} from '@/apis/order'
 
+const route = useRoute();
 const mappedArray = ref([])
 const detailArray = ref([])
 const itemsOfPage = ref()
 const allItems = ref()
 var cp;
 
-const getOrderList = async (page=1) => {
+const getOrderList = async (s, page=1) => {
   cp=page;
   const params = {
+    state:s,
     limit:1000,
     offset:0,
     page:cp
@@ -26,11 +29,19 @@ const getOrderList = async (page=1) => {
     orderItemList: item.orderItemList,
     totalAmount: item.totalAmount,
     createdDate: item.createdDate,
-    lastModifiedDate: item.lastModifiedDate
+    lastModifiedDate: item.lastModifiedDate,
+    state: item.state
   }));
 }
 
-onMounted( ()=> getOrderList())
+onMounted( ()=> {
+  getOrderList(route.params.state)
+})
+
+onBeforeRouteUpdate((to)=>{
+
+  getOrderList(to.params.state)
+})
 
 const search = ref('')
 const filterTableData = computed(() =>
@@ -63,7 +74,10 @@ const confirm = () => {
   <div class="main">
     <!-- 面包屑 -->
     <div class="bread-container">
-      <el-breadcrumb-item >訂單列表</el-breadcrumb-item>
+      <el-breadcrumb separator=">">
+        <el-breadcrumb-item >訂單列表</el-breadcrumb-item>
+        <el-breadcrumb-item>{{ route.params.state }}</el-breadcrumb-item>
+        </el-breadcrumb>
     </div>
     <div class="top">
       <el-input v-model="search"  placeholder="搜尋" class="search"/>
@@ -73,6 +87,7 @@ const confirm = () => {
       :header-cell-style="{ 'text-align': 'center' }">
         <el-table-column prop="orderId" label="Id" width="70" align="center" />
         <el-table-column prop="userId" label="用戶Id" width="70" align="center"/>
+        <el-table-column prop="state" label="訂單狀態" width="120" align="center"/>
         <el-table-column prop="receiver" label="收貨人" width="200" align="center"/>
         <el-table-column prop="contact" label="聯絡方式" width="200" align="center"/>
         <el-table-column prop="address" label="收貨地址" width="300" />

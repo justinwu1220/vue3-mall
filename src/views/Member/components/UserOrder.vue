@@ -2,17 +2,14 @@
 import { useUserStore } from '@/stores/userStore'
 import { getUserOrderAPI } from '@/apis/order'
 import { onMounted, ref } from 'vue'
+import {useRoute} from "vue-router"
 
 const userStore = useUserStore();
-
+const route = useRoute();
 const tabTypes = [
-  { name: "all", label: "全部訂單" },
-  { name: "unpay", label: "待付款" },
-  { name: "deliver", label: "待發貨" },
-  { name: "receive", label: "待收貨" },
-  { name: "comment", label: "待評價" },
-  { name: "complete", label: "已完成" },
-  { name: "cancel", label: "已取消" }
+  { name: "ALL", label: "全部訂單" },
+  { name: "UNPAID", label: "待付款" },
+  { name: "FINISH", label: "已完成" },
 ]
 
 const orderList = ref([])
@@ -20,9 +17,10 @@ const itemsOfPage = ref()
 const allItems = ref()
 var cp;
 
-const getOrderList = async (page=1) => {
+const getOrderList = async (s, page=1) => {
   cp=page;
   const params = {
+    state:s,
     limit:3,
     offset:0,
     page:cp
@@ -32,17 +30,44 @@ const getOrderList = async (page=1) => {
   itemsOfPage.value = limit
   allItems.value = total
 }
-onMounted(() => getOrderList())
+onMounted(() => getOrderList(route.params.state))
+
+onBeforeRouteUpdate((to)=>{
+
+getOrderList(to.params.state)
+})
 
 const handleCurrentChange = (currentPage) => {
 
-  getOrderList(currentPage);
+  getOrderList(route.params.state,currentPage);
+}
+const formatPayState = (payState) => {
+  const stateMap = {
+    1: '待付款',
+    2: '已完成'
+  }
+  return stateMap[payState]
+}
+const tabChange = (state) => {
+  var s ;
+  switch (state) {
+    case '0':
+      s='ALL';
+      break;
+    case '1':
+      s='UNPAID';
+      break;
+    case '2':
+      s='COMPLETED';
+      break;
+  }
+  getOrderList(s)
 }
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
       <div class="main-container">
@@ -73,31 +98,21 @@ const handleCurrentChange = (currentPage) => {
                   </li>
                 </ul>
               </div>
-              <!--div class="column state">
-                <p>{{ order.orderState }}</p>
-                <p v-if="order.orderState === 3">
-                  <a href="javascript:;" class="green">查看物流</a>
-                </p>
-                <p v-if="order.orderState === 4">
-                  <a href="javascript:;" class="green">評價商品</a>
-                </p>
-                <p v-if="order.orderState === 5">
-                  <a href="javascript:;" class="green">查看評價</a>
-                </p>
-              </div-->
+              <div class="column state">
+                <p>{{ order.state }}</p>
+              </div>
               <div class="column amount">
                 <p class="red">$ {{ order.totalAmount }}</p>
                 <p>（含運費：$ {{ 0 }}）</p>
               </div>
               <div class="column action">
-                <el-button  v-if="order.orderState === 1" type="primary"
+                <el-button  v-if="order.state === 'UNPAID'" type="primary"
                             size="small">
                   立即付款
                 </el-button>
                 <el-button v-if="order.orderState === 3" type="primary" size="small">
                   確認收貨
                 </el-button>
-                <p><a href="javascript:;">查看詳情</a></p>
                 <p v-if="[2, 3, 4, 5].includes(order.orderState)">
                   <a href="javascript:;">再次購買</a>
                 </p>
