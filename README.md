@@ -1,6 +1,8 @@
 # vue3-mall
 基於SpringBoot、MySQL、Vue 實作商店系統
 
+線上Demo : <https://justinwuproject.online/mall/>
+
 此專案為前端程式碼
 
 後端程式碼請前往 : <https://github.com/justinwu1220/springboot-mall>
@@ -27,8 +29,48 @@
 - Pinia
   - 前端狀態管理及持久化
 
+- AWS
+  - EC2 雲端部署
+
+- Docker
+  - docker-compose 
+  - 容器化部署
+
+- Nginx
+  - 伺服器反向代理
+
 ## 專案說明
 
+* 主要功能
+  
+  * 商品功能
+    * 管理商品CRUD
+      
+  * 購物車功能
+    * 管理購物車CRUD
+      
+  * 訂單功能
+    * 創建、查看訂單
+      
+  * 用戶功能
+    * 註冊、登入
+    * 管理用戶購物車
+    * 查看用戶訂單
+   
+* 權限管理
+  * ADMIN
+    * 商品CRUD請求✅
+    * 查看全部訂單請求✅
+    * 查看全部用戶請求✅
+      
+  * CLIENT
+    * 查詢商品請求✅
+    * 增刪改商品請求⛔
+    * 個人購物車商品CRUD請求✅
+    * 查詢個人訂單請求✅
+    * 查看全部訂單請求⛔
+    * 查看全部用戶請求⛔
+      
 * 專案結構
 ```lua
 src
@@ -133,36 +175,6 @@ src
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "用戶權限不足");
     }
     ```
-
-* 主要功能
-  
-  * 商品功能
-    * 管理商品CRUD
-      
-  * 購物車功能
-    * 管理購物車CRUD
-      
-  * 訂單功能
-    * 創建、查看訂單
-      
-  * 用戶功能
-    * 註冊、登入
-    * 用戶購物車
-    * 用戶訂單
-   
-* 權限管理
-  * ADMIN
-    * 商品CRUD請求✅
-    * 查看全部訂單請求✅
-    * 查看全部用戶請求✅
-      
-  * CLIENT
-    * 查詢商品請求✅
-    * 增刪改商品請求⛔
-    * 個人購物車商品CRUD請求✅
-    * 查詢個人訂單請求✅
-    * 查看全部訂單請求⛔
-    * 查看全部用戶請求⛔
 
 * 資料庫
   * MySQL
@@ -319,23 +331,57 @@ src
 
   ![gif](https://github.com/justinwu1220/springboot-mall/blob/main/img/8.gif)
 
+## 雲端部署
 
+* AWS
+  * EC2 t2.mirco
+  * OS: Ubuntu Server 22.04 LTS
 
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+* Docker
+  * docker-compose部署
+    ```docker
+    version: '3.8'
+    services:
+      frontend:
+        image: justinwu12/vue3-mall
+        container_name: mall-frontend
+        ports:
+          - "80:80"
+      backend:
+        image: justinwu12/springboot-mall
+        user: root
+        container_name: mall-backend
+        ports:
+          - "8080:8080"
+        depends_on:
+          - db
+        environment:
+          - SPRING_DATASOURCE_URL=${SPRING_MALL_DATASOURCE_URL}
+          - SPRING_DATASOURCE_USERNAME=${SPRING_MALL_DATASOURCE_USERNAME}
+          - SPRING_DATASOURCE_PASSWORD=${SPRING_MALL_DATASOURCE_PASSWORD}
+      db:
+        image: mysql
+        container_name: mysql
+        ports:
+          - "3306:3306"
+        environment:
+          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        volumes:
+          - db-data:/var/lib/mysql
+          - /初始資料庫路徑
+      nginx:
+        image: nginx
+        container_name: nginx-proxy
+        volumes:
+          - /nginx.conf路徑
+          - /SSL證書路徑
+        ports:
+          - "443:443"
+        depends_on:
+          - frontend
+    volumes:
+      db-data:
+    ```
+* Nginx
+  * SSL證書管理
+  * 伺服器反向代理
